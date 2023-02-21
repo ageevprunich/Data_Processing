@@ -30,7 +30,7 @@ public class Servlet extends HttpServlet {
 
         ArrayList<Services> data =new ArrayList<Services>();
         data.add(documents);
-
+        //lab3
         String answer = new Gson().toJson(data);
 
         PrintWriter out = response.getWriter();
