@@ -1,15 +1,17 @@
 package Entity;
 
-public class Entity {
+import java.io.Serializable;
 
+public class Services implements Serializable {
+    public static final long serialVersionUID =1L;
     private String name;
     private int timeToWait;
-    private String description;
+    private String imag;
 
-    public Entity(String name, int timeToWait, String description) {
+    public Services(String name, int timeToWait, String imag) {
         this.name = name;
         this.timeToWait = timeToWait;
-        this.description = description;
+        this.imag = imag;
     }
 
     public String getName() {
@@ -28,17 +30,18 @@ public class Entity {
         this.timeToWait = timeToWait;
     }
 
-    public String getDescription() {
-        return description;
+    public String getImag() {
+        return imag;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setImag(String imag) {
+        this.imag = imag;
     }
 
     //create Gson....
     @Override
     public String toString(){
-        return "{ \"name\" : \""+name+"\", \"timeToWaite\":\""+timeToWait+"\",\"description\":"+description+" } " ;
+        return "{ \"name\" : \""+name+"\", \"timeToWaite\":\""+timeToWait+"\",\"description\":"+imag+" } " ;
     }
+
 }
