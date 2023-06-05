@@ -1,48 +1,61 @@
 package Servlets;
 
-import Entity.Services;
-import com.google.gson.Gson;
-import crud.Lab2CrudI;
+import Entity.Refugees;
+
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jdbc1.SQLcrud;
 
-import javax.swing.text.html.parser.Entity;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/servlet")
 public class Servlet extends HttpServlet {
-    ServletConfigI servletConfig;
-    Lab2CrudI lab2Crud;
+    LabCRUDInterface<Refugees> crud = new SQLcrud();
 
-    public Servlet (){
-        super();
-        this.servletConfig = new ServletConfig();
-        this.lab2Crud = servletConfig.getCrud();
+    List<Refugees> list = new ArrayList<>();
+
+    public void init(ServletConfig config) throws ServletException {
+        crud = new SQLcrud();
+
     }
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        Services documents = new Services("ID Card", 14, "assets/doc.png");
-
-        ArrayList<Services> data =new ArrayList<Services>();
-        data.add(documents);
-
-        String answer = new Gson().toJson(data);
-
-        PrintWriter out = response.getWriter();
-        response.setContentType("aplication/json");
-        response.setCharacterEncoding("UTF-8");
-        out.println(answer);
-        out.flush();
+    public void destroy() {
+        try {
+            ((SQLcrud) crud).getConnection().close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-    public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String name = request.getParameter("name");
-        int timeToWait = Integer.parseInt(request.getParameter("timeToWait"));
-        String imag= request.getParameter("imag");
-        lab2Crud.update(new Services(name,timeToWait,imag));
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        response.setContentType("application/json");
+        response.getWriter().println(crud.read());
     }
+
+
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        Refugees refugees = HelpJson.refugeesParse(request);
+        int id = Integer.parseInt(request.getPathInfo().substring(1));
+        response.setContentType("application/json");
+        crud.update(id, refugees);
+        doGet(request, response);
+    }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Refugees refugees = HelpJson.refugeesParse(request);
+        crud.create(refugees);
+        doGet(request, response);
+    }
+
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getPathInfo().substring(1));
+        response.setContentType("application/json");
+        crud.delete(id);
+        doGet(request, response);
+    }
+
 }
