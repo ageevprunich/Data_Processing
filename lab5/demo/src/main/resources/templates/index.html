@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin page</title>
+    <!--    <link rel="stylesheet" th:href="@{/css/index.css}">-->
+</head>
+<body>
+<div class="container">
+    <h1>Admin page</h1>
+    <a href="new" class="add">Create new</a>
+    <table cellpadding="20">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>City</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="refugees : ${listref}">
+            <td th:text="${refugees.id}">ID</td>
+            <td th:text="${refugees.name}">name</td>
+            <td th:text="${refugees.age}">age</td>
+            <td th:text="${refugees.city}">city</td>
+            <td>
+                <a th:href="@{/update/{id}(id=${refugees.id})}">Update</a>
+                <br/><br/>
+                <a th:href="@{/delete/{id}(id=${refugees.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
