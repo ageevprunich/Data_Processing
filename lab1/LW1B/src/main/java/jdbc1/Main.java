@@ -21,8 +21,8 @@ public class Main {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
 
-            session.save(new Refugees(1,"Kyrylo",24,"Zaporizhzhia"));
-            session.save(new Refugees(2,"Lena",35,"Kyiv"));
+            session.delete(new Refugees(1,"Kyrylo",24,"Zaporizhzhia"));
+            session.delete(new Refugees(2,"Lena",35,"Kyiv"));
 
             session.getTransaction().commit();
         }
