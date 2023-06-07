@@ -15,8 +15,8 @@ public class RefService {
         return repo.findAll();
     }
 
-    public void save(Refugees element){
-        repo.save(element);
+    public void save(Refugees refugees){
+        repo.save(refugees);
     }
 
     public Refugees get(Integer id){

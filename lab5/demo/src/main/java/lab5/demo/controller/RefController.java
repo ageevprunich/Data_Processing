@@ -23,7 +23,7 @@ public class RefController {
         return "index";
     }
     @GetMapping("/new")
-    public String AddElem(Model model){
+    public String AddRef(Model model){
         Refugees refugees = new Refugees();
         model.addAttribute("refugees", refugees);
         return "new";

@@ -1,30 +1,31 @@
 package lab5.demo.Entity;
 import jakarta.persistence.*;
+
 @Entity
-@Table(name = "refugees_table")
+@Table(name = "refugees_table_new")
 public class Refugees  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
-    private int age;
+    private Integer age;
     private String city;
 
     public Refugees(){
 
     }
-    public Refugees(int id,String name, int age, String city) {
+    public Refugees(Integer id,String name, Integer age, String city) {
         this.id=id;
         this.name = name;
         this.age = age;
         this.city=city;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -36,11 +37,11 @@ public class Refugees  {
         this.name = name;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int time_to_waite) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
